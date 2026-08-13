@@ -1,0 +1,100 @@
+Use "ayy to yank the current line into register a.
+Use "ap to paste the contents of register a.
+Use an uppercase register letter, like "Ayy, to append instead of overwrite.
+Use "0p to paste the most recent yank, even after deleting something else.
+Use ma to set mark a at the cursor position.
+Use `a to jump to the exact position of mark a.
+Use 'a to jump to the first non-blank character on mark a's line.
+Marks a-z are local to a buffer; marks A-Z work across files.
+Use `` to jump back to the position before your last jump.
+Use qa to start recording a macro into register a.
+Press q again to stop recording the macro.
+Use @a to play back the macro stored in register a.
+Use @@ to repeat the last macro played.
+Prefix a macro playback with a count, e.g. 10@a, to run it 10 times.
+Use ciw to change the word under the cursor regardless of position within it.
+Use diw to delete the word under the cursor.
+Use yiw to yank the word under the cursor.
+Use ci" to change the text inside double quotes, leaving the quotes intact.
+Use di( to delete the text inside parentheses, leaving the parentheses intact.
+Use ya{ to yank the braces and everything inside them.
+Text objects combine with any operator: d, c, y, and v all accept iw, i", i(, and more.
+Use i[ and a[ the same way as i( and a( but for square brackets.
+Use Ctrl-v to start Visual Block mode for column selections.
+In Visual Block mode, press I then type to insert text on every selected line.
+In Visual Block mode, press A then type to append text after every selected line.
+In Visual Block mode, press $ before A to append at the true end of ragged lines.
+Use Ctrl-o to jump back to your previous cursor location.
+Use Ctrl-i to jump forward again after using Ctrl-o.
+Use :ls to list open buffers, then :b followed by a number or name to switch.
+Use :bd to delete (close) the current buffer.
+Use Ctrl-^ to toggle quickly between the two most recent buffers.
+Use :tabnew to open a new tab.
+Use gt and gT to move to the next and previous tab.
+Use zf followed by a motion to create a fold, like zfap for a paragraph.
+Use za to toggle a fold open or closed.
+Use zR to open all folds in the buffer.
+Use zM to close all folds in the buffer.
+Use :g/pattern/d to delete every line matching a pattern in the whole file.
+Use :g/pattern/normal @a to run macro a on every line matching a pattern.
+Use :v/pattern/d to delete every line that does not match a pattern.
+Use :%s/old/new/g to replace every occurrence of old with new in the file.
+Add c to a substitute command, like :%s/old/new/gc, to confirm each replacement.
+Use :s/old/new/g without a % prefix to replace only on the current line.
+Use '<,'> as the range to run a command over the last Visual selection.
+Use Ctrl-a to increment the number under or after the cursor.
+Use Ctrl-x to decrement the number under or after the cursor.
+In Visual mode, select several lines and press g Ctrl-a to increment them sequentially.
+Use gq followed by a motion to reformat text to the textwidth.
+Use == to auto-indent the current line according to filetype rules.
+Use gg=G to re-indent the entire file.
+Use :set list to reveal tabs and trailing whitespace as visible characters.
+Use "_d to delete text into the black hole register, without overwriting your last yank.
+Use :reg to see the contents of all registers.
+Use :marks to see all currently set marks.
+Use gv after a Visual selection to reselect the exact same text again.
+Use o while in Visual mode to jump to the other end of the selection.
+Use * while in Visual mode to search for the exact selected text.
+Use :sort to sort the lines in the current buffer or range alphabetically.
+Use :sort! to sort in reverse order.
+Use :sort u to sort and remove duplicate lines.
+Use gJ to join lines without inserting a space between them.
+Use Ctrl-w s to split the current window horizontally.
+Use Ctrl-w v to split the current window vertically.
+Use Ctrl-w = to make all split windows equal size.
+Use Ctrl-w o to close every window except the current one.
+Use :vimgrep /pattern/ **/*.txt to search across many files into the quickfix list.
+Use :copen to open the quickfix window after a :vimgrep or :make.
+Use :cnext and :cprev to move through quickfix results.
+Use gd to jump to the local declaration of the variable under the cursor.
+Position on an #if and press % to jump to its matching #endif.
+Use :setlocal to apply an option only to the current buffer.
+Use :e! to reload the current file, discarding unsaved changes.
+Use :diffthis on two windows to compare them side by side.
+Use ]p to paste text and adjust its indentation to match the current line.
+Use gp to paste and leave the cursor after the pasted text.
+Use "+y to yank into the system clipboard register.
+Use "+p to paste from the system clipboard register.
+Use :set clipboard=unnamedplus to make yank and delete use the system clipboard by default.
+Use Ctrl-e and Ctrl-y to scroll the window without moving the cursor line.
+Use zt, zz, and zb to move the current line to the top, middle, or bottom of the window.
+Use dip to delete an entire paragraph under the cursor.
+Use vip to select an entire paragraph under the cursor.
+Use ib and ab as shorthand text objects for i( and a(.
+Use it and at to select inside or around an HTML or XML tag.
+Use :normal followed by keys to run Normal mode commands on a range of lines.
+Use :argdo followed by a command to run it across every file in the argument list.
+Use :bufdo followed by a command to run it across every open buffer.
+Combine :argdo with :update to edit and save many files in one command.
+Use Ctrl-v $ to select to the true end of each line in a ragged Visual Block.
+Use q: to open the command-line window and edit past : commands before running them.
+Use q/ to open the search history window and edit past searches.
+Use :set scrolloff=8 to keep a few lines of context above and below the cursor.
+Use :set wrap or :set nowrap to control whether long lines visually wrap.
+Use g_ to jump to the last non-blank character on the line.
+Use :j to join the current line with the next, keeping a single space.
+Use cgn after searching to change the next match, then repeat it with .
+Use :set relativenumber to show relative line numbers, which makes counts easier to plan.
+Combine relativenumber with counts, like 5dd, once distances are visible at a glance.
+Use Ctrl-v then a decimal digit sequence to insert a raw character by codepoint.
+Use :%!sort as a quick alternative to :sort when piping through an external tool.

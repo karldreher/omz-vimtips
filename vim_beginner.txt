@@ -1,0 +1,100 @@
+Press i to enter Insert mode before the cursor.
+Press Esc to return to Normal mode from any other mode.
+Press :w to save (write) the current file.
+Press :q to quit if there are no unsaved changes.
+Press :wq or ZZ to save and quit in one step.
+Press :q! to quit without saving changes.
+Use h, j, k, l to move left, down, up, and right.
+Press w to jump to the start of the next word.
+Press b to jump to the start of the previous word.
+Press e to jump to the end of the current word.
+Press 0 to jump to the first column of the line.
+Press ^ to jump to the first non-blank character of the line.
+Press $ to jump to the end of the line.
+Press gg to jump to the first line of the file.
+Press G to jump to the last line of the file.
+Type a line number then G to jump to that line, e.g. 42G.
+Press a to insert text after the cursor.
+Press A to insert text at the end of the line.
+Press o to open a new line below and enter Insert mode.
+Press O to open a new line above and enter Insert mode.
+Press x to delete the character under the cursor.
+Press dd to delete (cut) the current line.
+Press yy to yank (copy) the current line.
+Press p to paste after the cursor or below the line.
+Press P to paste before the cursor or above the line.
+Press u to undo the last change.
+Press Ctrl-r to redo an undone change.
+Press . to repeat the last change.
+Press / then a pattern to search forward in the file.
+Press ? then a pattern to search backward in the file.
+Press n to repeat the last search in the same direction.
+Press N to repeat the last search in the opposite direction.
+Press v to start character-wise Visual mode.
+Press V to start line-wise Visual mode.
+Press :help followed by a topic to open vim's built-in help.
+Press cw to change the rest of the current word.
+Press dw to delete the rest of the current word.
+Press D to delete from the cursor to the end of the line.
+Press C to change from the cursor to the end of the line.
+Press r followed by a character to replace one character.
+Press J to join the current line with the next line.
+Press >> to indent the current line one level.
+Press << to unindent the current line one level.
+Prefix any motion with a number to repeat it, e.g. 3w.
+Press % to jump to the matching bracket, paren, or brace.
+Type :set number to show line numbers.
+Type :set nonumber to hide line numbers.
+Press Ctrl-g to see the current filename and cursor position.
+Use :e filename to open another file.
+Use :saveas filename to save the file under a new name.
+Press F followed by a character to jump backward on the line to the previous occurrence of that character.
+Remember: most Normal mode commands work as verb + motion, like d + w.
+Press cc to change the entire current line.
+Press S as a shortcut for cc.
+Press s to substitute the character under the cursor and enter Insert mode.
+Type :set hlsearch to highlight all search matches.
+Type :nohlsearch to clear search highlighting.
+Press * to search forward for the word under the cursor.
+Press # to search backward for the word under the cursor.
+Use Ctrl-o and Ctrl-i to retrace your cursor jumps backward and forward.
+Press gi to return to where you last left Insert mode.
+Press ~ to toggle the case of the character under the cursor.
+Type :set ignorecase to make searches case-insensitive.
+Type :set incsearch to see search matches as you type.
+Press zz to center the current line in the window.
+Press H to move the cursor to the top of the visible screen.
+Press L to move the cursor to the bottom of the visible screen.
+Press M to move the cursor to the middle of the visible screen.
+Use Ctrl-f to scroll forward a full screen.
+Use Ctrl-b to scroll backward a full screen.
+Type :set expandtab to insert spaces instead of tabs.
+Type :set tabstop=4 to set how wide a tab character displays.
+Press dj to delete the current line and the line below it.
+Press dk to delete the current line and the line above it.
+Press y$ to yank from the cursor to the end of the line.
+Press yw to yank to the start of the next word.
+Press f followed by a character to jump forward on the line to the next occurrence of that character.
+Save often with :w; it costs nothing and undo history stays intact.
+Press t followed by a character to jump forward on the line to just before the next occurrence of that character.
+Press T followed by a character to jump backward on the line to just after the previous occurrence of that character.
+Press Esc twice if you're ever unsure what mode you're in; it's always safe.
+Type vim filename from the terminal to open a file.
+Type vim with no filename, then :e path to open a file from inside vim.
+Press :w followed by a new filename to save a copy under that name.
+Use dG to delete from the cursor to the end of the file.
+Use dgg to delete from the cursor to the start of the file.
+Press gv to reselect the last Visual mode selection.
+Use Ctrl-v then Esc to fix text that looks mangled after a paste.
+Type :set autoindent to match the indentation of the previous line.
+Type :set paste before pasting from outside vim to avoid indentation issues.
+Type :set nopaste after pasting to restore normal typing behavior.
+In Insert mode, press Ctrl-w to delete the word before the cursor.
+In Insert mode, press Ctrl-u to delete back to the start of the line.
+Use :bn and :bp to move to the next or previous open buffer.
+Use :ls to list all open buffers.
+Type :sp filename to split the window horizontally and open a file.
+Type :vs filename to split the window vertically and open a file.
+Use Ctrl-w then w to move between split windows.
+Type :q to close a single split window without quitting vim.
+Press ; to repeat the last f, t, F, or T character search in the same direction.
