@@ -1,73 +1,101 @@
 # vimtips
 
-An oh-my-zsh plugin that shows a vim tip matched to your skill level every time
-you open a new shell, plus a `vimtips` command with subcommands to set that
-skill level and control how often a tip shows up at all.
+An [Oh My Zsh](https://ohmyz.sh) plugin that prints a vim tip matched to your
+skill level every time you open a new interactive shell — and a `vimtips`
+command to tune the level and how often tips appear.
 
-Everything runs with zsh builtins only (`printf`, `read`, `$(<file)`, etc.) —
-no external processes are spawned, so it adds no noticeable delay to shell
-startup.
+```
+Vim tip [beginner]: Press i to enter Insert mode before the cursor.
+```
+
+The plugin uses zsh builtins exclusively (`printf`, `read`, `$(<file)`,
+arithmetic expansion). It forks no external processes, so it adds no
+measurable delay to shell startup.
 
 ## Install
 
-1. Copy this directory into your oh-my-zsh custom plugins folder:
-
-   ```sh
-   cp -r vimtips "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/vimtips"
-   ```
-
-2. Add `vimtips` to the `plugins=(...)` list in `~/.zshrc`:
-
-   ```sh
-   plugins=(... vimtips)
-   ```
-
-3. Reload your shell:
-
-   ```sh
-   source ~/.zshrc
-   ```
-
-## Usage
-
-Every command runs through `vimtips <subcommand>`. Running `vimtips` alone
-(no subcommand) prints usage and exits 1; `vimtips help` prints the same
-usage but exits 0.
-
-Set your skill level directly:
+Clone the repository into your Oh My Zsh custom plugins directory:
 
 ```sh
-vimtips level beginner
-vimtips level intermediate
-vimtips level expert
+git clone https://github.com/karldreher/omz-vimtips.git \
+  "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/vimtips"
 ```
 
-Or run `vimtips level` with no argument to be prompted for one. The level is
-stored in `~/.vimtips`.  Whenever you're ready for the next level, you can upgrade!
+> **The target directory must be named `vimtips`, not `omz-vimtips`.** Oh My Zsh
+> looks for `plugins/<name>/<name>.plugin.zsh`, so cloning without the target
+> path above leaves a name mismatch and the plugin never loads — silently, with
+> no error.
 
-If `~/.vimtips` doesn't exist yet (e.g. right after installing), the plugin
-defaults to `beginner`, prints a one-line hint to run `vimtips level`, and
-writes that default so the hint only shows once.
-
-Set how often a tip shows up with `vimtips frequency`, a number from 0
-(never) to 1 (always):
+Add `vimtips` to the plugin list in `~/.zshrc`:
 
 ```sh
-vimtips frequency .5
+plugins=(... vimtips)
 ```
 
-Or run `vimtips frequency` with no argument to be prompted for one — .1, .5,
-and 1 are suggested, but any value in that range works. It's stored in
-`~/.vimtips_frequency` and defaults to 1 (always) if unset.
+Then reload your shell:
 
-On every new interactive shell, a random tip from the matching
-`vim_<level>.txt` file is printed (subject to the frequency check above). It
-avoids repeating any of the last 10 tips shown (tracked in
-`~/.vimtips_history`), so runs at the same level stay varied.
+```sh
+source ~/.zshrc
+```
 
-## Files
+## Commands
 
-- `vimtips.plugin.zsh` — the `vimtips` command (with its `level`,
-  `frequency`, and `help` subcommands) and the startup tip display.
-- `vim_beginner.txt`, `vim_intermediate.txt`, `vim_expert.txt` — 100 tips
-  each, one per line.
+| Command | Description |
+| --- | --- |
+| `vimtips level [beginner\|intermediate\|expert]` | Set your skill level. Prompts if the level is omitted. |
+| `vimtips frequency [0-1]` | Set how often a tip appears. Prompts if the value is omitted. |
+| `vimtips help` | Show usage. |
+
+Running `vimtips` with no subcommand prints the same usage but exits `1`, since
+that is a usage error; `vimtips help` exits `0`.
+
+```sh
+vimtips level expert     # switch levels whenever you are ready to move up
+vimtips frequency .5     # a tip on roughly half of new shells
+```
+
+Any value between `0` and `1` is accepted for `frequency` — `0` never shows a
+tip, `1` always does, and `.1`/`.5`/`1` are merely the suggested starting
+points.
+
+## Configuration
+
+State lives in three plain-text files in `$HOME`. You normally never edit these
+by hand; the `vimtips` subcommands write them for you.
+
+| File | Purpose | Default |
+| --- | --- | --- |
+| `~/.vimtips` | Skill level: `beginner`, `intermediate`, or `expert` | `beginner` |
+| `~/.vimtips_frequency` | Probability a tip is shown, `0`–`1` | `1` (always) |
+| `~/.vimtips_history` | The last 10 tips shown, tagged with the level they were shown for | — |
+
+If `~/.vimtips` or `~/.vimtips_frequency` is missing or holds an unrecognized
+value, the plugin falls back to the default above, prints a one-line hint naming
+the command that changes it, and writes the default out — so the hint appears
+only once.
+
+## How tips are chosen
+
+On each new interactive shell:
+
+1. **Frequency roll.** A uniform random draw in `[0, 1)` is compared against
+   your configured frequency. If it does not pass, nothing is printed and no
+   files are touched.
+2. **Pick a tip.** A random line is chosen from `vim_<level>.txt`, excluding any
+   of the last 10 tips recorded in `~/.vimtips_history`, so consecutive shells
+   at the same level stay varied. If every tip has been shown recently, the full
+   list is used again.
+3. **Record it.** The chosen tip is prepended to the history file, which is
+   trimmed back to 10 entries.
+
+History is tagged with the level it was recorded under. Switching levels
+discards it, because it filters a different pool of tips.
+
+## Repository layout
+
+| Path | Contents |
+| --- | --- |
+| `vimtips.plugin.zsh` | The `vimtips` command and the startup tip display |
+| `vim_beginner.txt` | 100 beginner tips, one per line |
+| `vim_intermediate.txt` | 100 intermediate tips, one per line |
+| `vim_expert.txt` | 100 expert tips, one per line |
