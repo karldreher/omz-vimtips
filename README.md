@@ -18,19 +18,16 @@ Clone the repository into your Oh My Zsh custom plugins directory:
 
 ```sh
 git clone https://github.com/karldreher/omz-vimtips.git \
-  "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/vimtips"
+  "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/omz-vimtips"
 ```
 
-> **The target directory must be named `vimtips`, not `omz-vimtips`.** Oh My Zsh
-> looks for `plugins/<name>/<name>.plugin.zsh`, so cloning without the target
-> path above leaves a name mismatch and the plugin never loads — silently, with
-> no error.
-
-Add `vimtips` to the plugin list in `~/.zshrc`:
+Add `omz-vimtips` to the plugin list in `~/.zshrc`:
 
 ```sh
-plugins=(... vimtips)
+plugins=(... omz-vimtips)
 ```
+
+The plugin is named `omz-vimtips`; the command it provides is `vimtips`.
 
 Then reload your shell:
 
@@ -95,7 +92,7 @@ discards it, because it filters a different pool of tips.
 
 | Path | Contents |
 | --- | --- |
-| `vimtips.plugin.zsh` | The `vimtips` command and the startup tip display |
+| `omz-vimtips.plugin.zsh` | The `vimtips` command and the startup tip display |
 | `vim_beginner.txt` | 100 beginner tips, one per line |
 | `vim_intermediate.txt` | 100 intermediate tips, one per line |
 | `vim_expert.txt` | 100 expert tips, one per line |
