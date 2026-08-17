@@ -1,0 +1,100 @@
+Use \v (very magic) in a search or substitute to write regex with fewer backslashes.
+Use \V (very nomagic) to search for a literal string with almost no special characters.
+Use \zs in a pattern to mark where a match "starts" for replacement purposes.
+Use \ze in a pattern to mark where a match "ends" for replacement purposes.
+Use \1 through \9 in a substitute replacement to reference captured groups.
+Wrap a pattern group in \( \) to capture it for backreferences.
+Use :%s/\(\w\+\) \(\w\+\)/\2 \1/ to swap two space-separated words on every line.
+Read :help pattern.txt for the full regex reference inside vim's help.
+Define a custom function with :function! Name() ... :endfunction.
+Use autocmd to run a command automatically on an event, like BufWritePre.
+Scope autocmds with an augroup and clear them with autocmd! to avoid duplicate registration.
+Define a mapping with <expr> to compute the mapped keys dynamically.
+Use nnoremap instead of nmap to avoid unexpected recursive mapping expansion.
+Use <silent> in a mapping to suppress the command from echoing in the status line.
+Use <buffer> in a mapping to scope it to the current buffer only.
+Use :verbose map followed by a key to see which script last defined that mapping.
+Use :scriptnames to list every script vim has sourced, in load order.
+Use :profile start plus :profile func * and :profile file * to profile startup time.
+Use :mkview and :loadview to save and restore folds, cursor position, and options for a file.
+Use :mksession! to save the entire window and tab layout to a session file.
+Run vim -S session.vim to restart vim with a saved session restored.
+Use :set foldmethod=syntax to fold based on the language's syntax rules.
+Use :set foldmethod=expr with foldexpr for fully custom fold logic.
+Use :set foldmethod=indent to fold purely based on indentation depth.
+Use gq with a custom formatprg to pipe text through an external formatter.
+Use :r! command to insert the output of a shell command into the buffer.
+Use :.! command to filter the current line through a shell command and replace it.
+Use :'<,'>! sort to filter a Visual selection through an external sort command.
+Use Ctrl-z to suspend vim and fg to resume it, when :terminal isn't available.
+Use :terminal to open an embedded terminal buffer inside vim.
+Use Ctrl-\ Ctrl-n to leave Terminal-job mode and return to Normal mode.
+Use :diffsplit filename to open a file and diff it against the current buffer.
+Use ]c and [c to jump to the next and previous diff hunk.
+Use do and dp to obtain or put a diff hunk between two diffed windows.
+Use :set spell to enable inline spell checking.
+Use ]s and [s to jump to the next and previous misspelled word.
+Use zg to add a word to the spell file as good, or zw to mark it wrong.
+Use Ctrl-k followed by two characters to insert a digraph, like Ctrl-k a: for a with umlaut.
+Use :digraphs to list every digraph vim supports.
+Use ga on a character to see its decimal, hex, and octal codepoint values.
+Use :set encoding=utf-8 to ensure vim's internal representation is UTF-8.
+Use g? to ROT13-encode a Visual selection, handy for obfuscating spoilers.
+Use Ctrl-v U followed by four hex digits to insert a Unicode character directly.
+Use :redir @a to capture the output of Ex commands into register a.
+Use :execute to build and run an Ex command string dynamically.
+Use :let @a = 'text' to set a register's contents from a script.
+Access function arguments with the a: prefix inside a Vimscript function.
+Prefix a function name with s: to keep it script-local instead of global.
+Use has() in Vimscript to check for optional features before using them.
+Use exists() to check whether a variable, function, or option is defined before referencing it.
+Use :echo and :echom to print debug values; :echom keeps a history in :messages.
+Use :messages to review recently printed messages, including errors.
+Use try, catch, and finally in Vimscript for structured error handling.
+Use :call to invoke a function for its side effects, discarding any return value.
+Define a custom Ex command with :command! and a callback function.
+Give a custom command an argument with -nargs=1 or -nargs=* in its :command! definition.
+Use :setf or :set filetype= to force a buffer's filetype for syntax and indent rules.
+Use ftplugin files under after/ftplugin/ to apply settings only for a given filetype.
+Use :set makeprg to configure what :make runs for the current project.
+Run :make then :copen to build and browse errors in the quickfix list.
+Use gf to open the filename under the cursor, following include paths.
+Use Ctrl-] to jump to the tag under the cursor, if a tags file is loaded.
+Use :set tags= to point vim at a ctags-generated tags file.
+Use Ctrl-t to jump back up the tag stack after a Ctrl-] jump.
+Use :tselect to choose among multiple matching tags when a name is ambiguous.
+Press K on a word to look it up with keywordprg, often man by default.
+Use :syntax to inspect or extend syntax highlighting rules for a filetype.
+Use :hi to define or inspect a highlight group's colors and attributes.
+Use :verbose hi GroupName to see which script last set a highlight group.
+Use matchadd() to highlight arbitrary patterns without changing the search register.
+Use :set virtualedit=block to move the cursor past the end of short lines in Visual Block mode.
+Use gn to select the next search match as a Visual selection, ready for an operator.
+Combine cgn with . to change successive search matches one repeat at a time.
+Use :g/pattern/t. to duplicate every matching line directly below itself.
+Use :g/pattern/m0 to move every matching line to the top of the file, reversing their order.
+Use :2,5m$ to move lines 2 through 5 to the end of the file.
+Use :2,5co$ to copy lines 2 through 5 to the end of the file.
+Use expand('%:p') in Vimscript to get the current file's absolute path.
+Use expand('%:h') for the current file's directory, and %:t for just the filename.
+Use :set undofile to persist undo history to disk across sessions.
+Use :set undodir to control where persistent undo files are stored.
+Use g- and g+ to move backward and forward through undo history by time, not just by branch.
+Use :earlier 5m to revert the buffer to how it looked five minutes ago.
+Use :later to move forward again after using :earlier.
+Use :packadd to load an optional package on demand from the pack directory.
+Structure plugins under pack/*/start for automatic loading or pack/*/opt for manual packadd.
+Use :set runtimepath to inspect or extend where vim looks for scripts and plugins.
+Run vim --startuptime log.txt to profile exactly where startup time is spent.
+Use :set lazyredraw to skip redrawing the screen while a macro is running, for speed.
+Use :noautocmd before a command to run it without triggering any autocmds.
+Use getline() and setline() in Vimscript to read and write buffer lines programmatically.
+Use writefile() and readfile() in Vimscript to work with files outside the current buffer.
+Use systemlist() to run a shell command and capture its output as a list of lines.
+Use job_start() or jobstart() for asynchronous, non-blocking shell command execution.
+Use timer_start() to schedule a Vimscript callback to run after a delay.
+Use :set signcolumn=yes to reserve a gutter column for signs, like linters or git markers.
+Use sign_place() to programmatically place a sign, such as a breakpoint marker, on a line.
+Use completefunc or omnifunc to customize what Ctrl-x Ctrl-o completes against.
+Use Ctrl-n and Ctrl-p in Insert mode for simple keyword-based autocompletion.
+Read :help usr_41.txt as the entry point into vim's own Vimscript programming guide.
