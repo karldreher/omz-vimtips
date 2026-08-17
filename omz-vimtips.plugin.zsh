@@ -209,7 +209,9 @@ _vimtips_save_history() {
   _vimtips_recent=("$tip" "${_vimtips_recent[@]}")
   if (( ${#_vimtips_recent[@]} > VIMTIPS_HISTORY_SIZE )); then
     # 0-based slice again: start at the newest entry, keep that many.
-    _vimtips_recent=("${_vimtips_recent[@]:0:VIMTIPS_HISTORY_SIZE}")
+    # The `$` on the length is required: zsh reads a bare letter after the
+    # second `:` as a history modifier, not as an arithmetic expression.
+    _vimtips_recent=("${_vimtips_recent[@]:0:$VIMTIPS_HISTORY_SIZE}")
   fi
 
   {
