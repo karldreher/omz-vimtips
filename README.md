@@ -50,7 +50,7 @@ vimtips frequency .5     # a tip on roughly half of new shells
 
 Frequency is a fraction: `1` shows a tip on every new shell, `0` turns tips
 off entirely, and anything between shows one that share of the time. Any value
-in the range works, not just the round ones.
+in the range works.
 
 Run either command with no argument to be prompted instead.
 
@@ -74,8 +74,7 @@ only once.
 
 On each new interactive shell:
 
-1. **Roll against your frequency.** If the roll fails, nothing is printed and
-   no files are touched.
+1. **Determine if a tip should be shown.**  Based on your selected `vimtips frequency`, randomness determines if a tip will be presented.
 2. **Pick a tip.** A random line from `vim_<level>.txt`, skipping the last 10
    tips recorded in `~/.vimtips_history` so consecutive shells stay varied. If
    every tip has been shown recently, the full list becomes eligible again.
