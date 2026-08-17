@@ -1,4 +1,4 @@
-# vimtips
+# omz-vimtips
 
 An [Oh My Zsh](https://ohmyz.sh) plugin that prints a vim tip matched to your
 skill level every time you open a new interactive shell — and a `vimtips`
