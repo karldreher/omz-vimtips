@@ -1,29 +1,21 @@
 # ==============================================================================
 # vimtips — prints a vim tip matched to your skill level on every interactive
-# shell, and provides a `vimtips` command with subcommands:
-#   vimtips level [beginner|intermediate|expert]   read/set your skill level
-#   vimtips frequency [0-1]                        read/set how often a tip shows
-#   vimtips help                                    show usage
-# Running `vimtips` with no subcommand prints help and exits 1.
+# shell, and provides the `vimtips` command to configure that. See README.md
+# for usage and for the files this reads and writes.
 #
-# Layout this file depends on:
-#   vim_beginner.txt / vim_intermediate.txt / vim_expert.txt   — one tip per
-#     line, living next to this file (see $VIMTIPS_PLUGIN_DIR below).
-#   ~/.vimtips           — single line, one of beginner|intermediate|expert.
-#   ~/.vimtips_frequency — single line, a number from 0 (never show a tip)
-#     to 1 (always show a tip); e.g. 0.5 shows one roughly half the time.
-#   ~/.vimtips_history   — first line is the level it was recorded for, the
-#     rest are the last $VIMTIPS_HISTORY_SIZE tips shown, newest first.
+# Every line of this file runs on every shell startup, which drives three
+# conventions worth knowing before editing it:
 #
-# Performance note: this whole file sticks to zsh builtins — printf, read,
-# $(<file), the (f) split flag, arithmetic expansion — instead of external
-# commands like cat/wc/shuf/bc, since it runs on every shell startup. That
-# rules out the usual `result=$(some_function)` pattern for the helpers below
-# too: command substitution forks a subshell in zsh for anything except the
-# special `$(<file)` file-read case. So instead of returning values, the
-# helper functions set global scratch variables (each documented below).
-# Floating-point frequency comparisons work the same way: zsh's `(( ))`
-# arithmetic natively supports floats (unlike bash), so no `bc` is needed.
+#   1. Builtins only — printf, read, $(<file), the (f) split flag, arithmetic
+#      expansion — never cat/wc/shuf/bc. Each external command is a fork.
+#
+#   2. Helpers set globals instead of returning values. `result=$(helper)` is
+#      also a fork: zsh spawns a subshell for every command substitution
+#      except the special `$(<file)` file-read form. So each helper below
+#      writes its result into a documented _vimtips_* scratch global.
+#
+#   3. No `bc` for the frequency maths. zsh's `(( ))` handles floats natively,
+#      unlike bash's.
 # ==============================================================================
 
 # Directory this file lives in, so vim_<level>.txt can be found next to it.
@@ -112,10 +104,10 @@ _vimtips_cmd_level() {
   printf 'vim skill level set to %s\n' "$level"
 }
 
-# Checks that $1 looks like a plain decimal number (digits, an optional
-# leading "0", an optional single ".", at least one digit somewhere) in the
-# range 0-1 inclusive. Used by both _vimtips_cmd_frequency and the startup
-# loader.
+# Checks that $1 is a plain decimal number in the range 0-1, inclusive at both
+# ends. The pattern requires at least one digit after any decimal point, so
+# ".5", "0.5" and "1" are accepted while "1." and "" are rejected. Used by both
+# _vimtips_cmd_frequency and the startup loader.
 _vimtips_valid_frequency() {
   local val="$1"
   [[ "$val" =~ ^[0-9]*\.?[0-9]+$ ]] || return 1
@@ -198,8 +190,13 @@ _vimtips_load_history() {
 
   [[ -r "$VIMTIPS_HISTORY_FILE" ]] || return
 
+  # (f) splits the file's contents on newlines, one array element per line.
   local -a lines
   lines=("${(f)"$(<"$VIMTIPS_HISTORY_FILE")"}")
+
+  # Mind the two indexing conventions on the next line: zsh arrays are
+  # 1-based, so lines[1] is the level tag written by _vimtips_save_history —
+  # but slice offsets are 0-based, so [@]:1 drops that tag and keeps the tips.
   [[ "${lines[1]}" == "$level" ]] && _vimtips_recent=("${lines[@]:1}")
 }
 
@@ -211,6 +208,7 @@ _vimtips_save_history() {
 
   _vimtips_recent=("$tip" "${_vimtips_recent[@]}")
   if (( ${#_vimtips_recent[@]} > VIMTIPS_HISTORY_SIZE )); then
+    # 0-based slice again: start at the newest entry, keep that many.
     _vimtips_recent=("${_vimtips_recent[@]:0:VIMTIPS_HISTORY_SIZE}")
   fi
 
@@ -239,6 +237,8 @@ _vimtips_pick_tip() {
   done
   (( ${#candidates[@]} == 0 )) && candidates=("${tips[@]}")
 
+  # RANDOM % n gives 0..n-1; the + 1 shifts that onto zsh's 1-based array
+  # subscripts. It is not an off-by-one.
   local idx=$(( RANDOM % ${#candidates[@]} + 1 ))
   _vimtips_chosen="${candidates[idx]}"
 }
